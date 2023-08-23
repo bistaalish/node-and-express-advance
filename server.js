@@ -18,6 +18,9 @@ app.use(session({
   cookie: {secure: false}
 }))
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 fccTesting(app); //For FCC testing purposes
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(express.json());

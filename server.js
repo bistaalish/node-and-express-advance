@@ -7,7 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const routes = require('./routes.js');
 const auth = require('./auth.js');
-const cors = require('cors');
+const cors = require("cors")
 const app = express();
 
 const http = require('http').createServer(app);
@@ -15,7 +15,7 @@ const io = require('socket.io')(http);
 
 app.set('view engine', 'pug');
 app.set('views', './views/pug');
-app.use(cors());
+app.use(cors)
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: true,
@@ -37,7 +37,10 @@ myDB(async client => {
   routes(app, myDataBase);
   auth(app, myDataBase);
 
-  io.on('connection', socket => {
+  let currentUsers = 0;
+  io.on('connection', (socket) => {
+    ++currentUsers;
+    io.emit('user count', currentUsers);
     console.log('A user has connected');
   });
   

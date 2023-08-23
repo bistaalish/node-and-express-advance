@@ -8,7 +8,6 @@ const passport = require('passport');
 const { ObjectID } = require('mongodb');
 const LocalStrategy = require('passport-local');
 
-
 const app = express();
 
 app.set('view engine', 'pug');
@@ -35,7 +34,8 @@ myDB(async client => {
   app.route('/').get((req, res) => {
     res.render('index', {
       title: 'Connected to Database',
-      message: 'Please log in'
+      message: 'Please log in',
+      showLogin: true
     });
   });
 
@@ -50,9 +50,9 @@ myDB(async client => {
   passport.use(new LocalStrategy((username, password, done) => {
     myDataBase.findOne({ username: username }, (err, user) => {
       console.log(`User ${username} attempted to log in.`);
-      if (err) return done(err);
-      if (!user) return done(null, false);
-      if (password !== user.password) return done(null, false);
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (password !== user.password) { return done(null, false); }
       return done(null, user);
     });
   }));

@@ -31,7 +31,7 @@ module.exports = function (app, myDataBase) {
   passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: 'https://boilerplate-advancednode.sky020.repl.co/auth/github/callback'
+    callbackURL: process.env.GITHUB_CALLBACKURL
     },
     function (accessToken, refreshToken, profile, cb) {
       console.log(profile);
